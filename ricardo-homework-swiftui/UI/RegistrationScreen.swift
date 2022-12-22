@@ -8,35 +8,28 @@
 import SwiftUI
 
 struct RegistrationScreen: View {
-    private static let passwordRequirements = """
-            Password must meet the following requirements:
-                - At least 8 characters
-                - Must contain a letter
-                - Must contain a decimal
-                - Must contain a special character
-            """
-
-    var onRegistrationSuccessful: () -> Void
-
-    @State private var username = ""
+    
+    @StateObject var userModel = UserModel()
+    
     @FocusState private var isUsernameFocused
     @State private var wasUsernameEverModified = false
     @State private var isUsernameValid = false
 
-    @State private var password = ""
     @FocusState private var isPasswordFocused
     @State private var wasPasswordEverModified = false
     @State private var isPasswordValid = false
+    
+    var onRegistrationSuccessful: () -> Void
 
     var body: some View {
         CenteredScrollView {
             TextFieldWithError(
                 title: "Username",
-                text: $username,
+                text: $userModel.username,
                 errorMessage: (isUsernameValid || !wasUsernameEverModified) ? nil : "Username not valid"
             )
             .focused($isUsernameFocused)
-            .onChange(of: username) { username in
+            .onChange(of: userModel.username) { username in
                 isUsernameValid = !username.isEmpty
             }
             .onChange(of: isUsernameFocused) { isFocused in
@@ -47,11 +40,11 @@ struct RegistrationScreen: View {
 
             TextFieldWithError(
                 title: "Password",
-                text: $password,
+                text: $userModel.password,
                 errorMessage: (isPasswordValid || !wasPasswordEverModified) ? nil : "Password not valid"
             )
             .focused($isPasswordFocused)
-            .onChange(of: password) { password in
+            .onChange(of: userModel.password) { password in
                 isPasswordValid =
                     password.count >= 6 &&
                     password.rangeOfCharacter(from: .letters) != nil &&
@@ -66,7 +59,7 @@ struct RegistrationScreen: View {
 
             Spacer().frame(height: 20)
 
-            Text(Self.passwordRequirements)
+            Text(Constants.passwordRequirements)
                 .font(.system(.callout))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -90,12 +83,8 @@ struct RegistrationScreen: View {
         wasUsernameEverModified = true
         wasPasswordEverModified = true
 
-        isUsernameValid = !username.isEmpty
-        isPasswordValid =
-            password.count >= 8 &&
-            password.rangeOfCharacter(from: .letters) != nil &&
-            password.rangeOfCharacter(from: .decimalDigits) != nil &&
-            password.rangeOfCharacter(from: .alphanumerics.inverted) != nil
+        isUsernameValid = userModel.isUsernameValid
+        isPasswordValid = userModel.isPasswordValid
 
         guard isUsernameValid && isPasswordValid else {
             return
