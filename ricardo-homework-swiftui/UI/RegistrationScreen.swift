@@ -13,11 +13,9 @@ struct RegistrationScreen: View {
     
     @FocusState private var isUsernameFocused
     @State private var wasUsernameEverModified = false
-    @State private var isUsernameValid = false
 
     @FocusState private var isPasswordFocused
     @State private var wasPasswordEverModified = false
-    @State private var isPasswordValid = false
     
     var onRegistrationSuccessful: () -> Void
 
@@ -26,12 +24,9 @@ struct RegistrationScreen: View {
             TextFieldWithError(
                 title: "Username",
                 text: $userModel.username,
-                errorMessage: (isUsernameValid || !wasUsernameEverModified) ? nil : "Username not valid"
+                errorMessage: (userModel.isUsernameValid || !wasUsernameEverModified) ? nil : "Username not valid"
             )
             .focused($isUsernameFocused)
-            .onChange(of: userModel.username) { username in
-                isUsernameValid = userModel.isUsernameValid
-            }
             .onChange(of: isUsernameFocused) { isFocused in
                 if !isFocused {
                     wasUsernameEverModified = true
@@ -41,12 +36,9 @@ struct RegistrationScreen: View {
             TextFieldWithError(
                 title: "Password",
                 text: $userModel.password,
-                errorMessage: (isPasswordValid || !wasPasswordEverModified) ? nil : "Password not valid"
+                errorMessage: (userModel.isPasswordValid || !wasPasswordEverModified) ? nil : "Password not valid"
             )
             .focused($isPasswordFocused)
-            .onChange(of: userModel.password) { password in
-                isPasswordValid = userModel.isPasswordValid
-            }
             .onChange(of: isPasswordFocused) { isFocused in
                 if !isFocused {
                     wasPasswordEverModified = true
@@ -78,14 +70,9 @@ struct RegistrationScreen: View {
     private func registerButtonTapped() {
         wasUsernameEverModified = true
         wasPasswordEverModified = true
-
-        isUsernameValid = userModel.isUsernameValid
-        isPasswordValid = userModel.isPasswordValid
-
-        guard isUsernameValid && isPasswordValid else {
+        guard userModel.isLoginDataValid else {
             return
         }
-
         onRegistrationSuccessful()
     }
 }

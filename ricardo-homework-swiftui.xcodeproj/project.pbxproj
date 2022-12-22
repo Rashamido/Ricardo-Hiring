@@ -148,7 +148,6 @@
 			children = (
 				6ABA590D28DF33C700CF81A6 /* CenteredScrollView.swift */,
 				6ABA590F28DF351200CF81A6 /* TextFieldWithError.swift */,
-				6AB4747028DF46B1001D30C0 /* SuccessScreen.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -166,6 +165,7 @@
 			children = (
 				6ABA591328DF44C200CF81A6 /* RootScreen.swift */,
 				6ABA58E228DF320100CF81A6 /* RegistrationScreen.swift */,
+				6AB4747028DF46B1001D30C0 /* SuccessScreen.swift */,
 				6ABA590A28DF33A400CF81A6 /* Common */,
 			);
 			path = UI;
