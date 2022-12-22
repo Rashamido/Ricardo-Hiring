@@ -109,8 +109,8 @@
 		6ABA58DF28DF320100CF81A6 /* ricardo-homework-swiftui */ = {
 			isa = PBXGroup;
 			children = (
-				93AA4A3329549DCD0094C0C3 /* Models */,
 				93AA4A2D29549BF60094C0C3 /* System */,
+				93AA4A3329549DCD0094C0C3 /* Models */,
 				93AA4A2E29549C0B0094C0C3 /* UI */,
 				6ABA58E428DF320200CF81A6 /* Assets.xcassets */,
 				6ABA58E628DF320200CF81A6 /* Preview Content */,
