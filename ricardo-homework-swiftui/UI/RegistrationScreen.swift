@@ -30,7 +30,7 @@ struct RegistrationScreen: View {
             )
             .focused($isUsernameFocused)
             .onChange(of: userModel.username) { username in
-                isUsernameValid = !username.isEmpty
+                isUsernameValid = userModel.isUsernameValid
             }
             .onChange(of: isUsernameFocused) { isFocused in
                 if !isFocused {
@@ -45,11 +45,7 @@ struct RegistrationScreen: View {
             )
             .focused($isPasswordFocused)
             .onChange(of: userModel.password) { password in
-                isPasswordValid =
-                    password.count >= 6 &&
-                    password.rangeOfCharacter(from: .letters) != nil &&
-                    password.rangeOfCharacter(from: .decimalDigits) != nil &&
-                    password.rangeOfCharacter(from: .alphanumerics.inverted) != nil
+                isPasswordValid = userModel.isPasswordValid
             }
             .onChange(of: isPasswordFocused) { isFocused in
                 if !isFocused {
